@@ -11,9 +11,9 @@ RUN apt-get update || true && \
     libssl-dev g++ gcc libc6-dev \
     bash-completion flex bison \
     cmake make autoconf git \
-    unzip dos2unix \
+    dos2unix \
     apt-transport-https ca-certificates software-properties-common \
-    net-tools inetutils-ping pkg-config && \
+    pkg-config && \
     rm -rf /var/lib/apt/lists/* \
     /var/log/*.log /root/.cache
 
