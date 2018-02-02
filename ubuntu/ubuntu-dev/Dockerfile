@@ -52,5 +52,29 @@ RUN git clone https://github.com/labapart/gattlib && \
     make && make install && \
     cd / && rm -rf gattlib
 
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-4.0.2.tar.gz
+ENV REDIS_DOWNLOAD_SHA b1a0915dbc91b979d06df1977fe594c3fa9b189f1f3d38743a2948c9f7634813
+
+# download redis
+RUN wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL" && \
+    echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c - && \
+    mkdir -p redis && \
+    tar -xzf redis.tar.gz -C redis --strip-components=1 && \
+    rm redis.tar.gz
+
+# install redis
+RUN make -C redis/deps/hiredis && \
+    make -C redis/deps/hiredis install && \
+    rm -r redis
+
+# install mysql head files & library files
+RUN mkdir /usr/local/include/mysql && \
+    wget https://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.1.11-linux-glibc2.12-x86_64.tar.gz && \
+    tar zxf mysql-connector-c-6.1.11-linux-glibc2.12-x86_64.tar.gz && \
+    cp -a mysql-connector-c-6.1.11-linux-glibc2.12-x86_64/include /usr/local/include/mysql && \
+    cp -a mysql-connector-c-6.1.11-linux-glibc2.12-x86_64/lib/* /usr/local/lib/ && \
+    rm -rf mysql-connector-c-6.1.11-linux-glibc2.12-x86_64.tar.gz mysql-connector-c-6.1.11-linux-glibc2.12-x86_64
+
+
 CMD ["bash"]
 
