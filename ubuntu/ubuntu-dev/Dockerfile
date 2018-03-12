@@ -6,7 +6,7 @@ RUN apt-get update || true && \
     apt-get install -y \
     vim tree wget curl \
     libssl-dev gdb flex bison \
-    cmake autoconf git \
+    cmake autoconf git golang-1.9 \
     unzip cppcheck dos2unix \
     apt-transport-https ca-certificates software-properties-common \
     net-tools inetutils-ping pkg-config \
@@ -20,8 +20,11 @@ RUN apt-get update || true && \
     /var/log/*.log /root/.cache
 
 ENV BOOST_SHA 5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9
+ENV GOROOT=/usr/lib/go-1.9
+ENV PATH=$PATH:/usr/lib/go-1.9/bin
+ENV GOPATH=/go
 
-RUN mkdir -p /tmp/test && \
+RUN mkdir -p /tmp/test /go && \
     cd /tmp/test && \
     wget https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.bz2 && echo "$BOOST_SHA boost_1_66_0.tar.bz2" | sha256sum -c - && \
     tar jxf boost_1_66_0.tar.bz2 && cd boost_1_66_0 && \
