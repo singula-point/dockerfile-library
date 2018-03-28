@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-LABEL maintainer Li Jiangjin(lijj@singula-poing.com)
+LABEL maintainer Li Jiangjin(lijj@singula-point.com)
 
 RUN apt-get update || true && \
     apt-get install -y \
@@ -78,6 +78,14 @@ RUN mkdir /usr/local/include/mysql && \
     cp -a mysql-connector-c-6.1.11-linux-glibc2.12-x86_64/lib/* /usr/local/lib/ && \
     rm -rf mysql-connector-c-6.1.11-linux-glibc2.12-x86_64.tar.gz mysql-connector-c-6.1.11-linux-glibc2.12-x86_64
 
+# change timezone
+COPY Shanghai /etc/localtime
+
+# change locale
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 
 CMD ["bash"]
 
