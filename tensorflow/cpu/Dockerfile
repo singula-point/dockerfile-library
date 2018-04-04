@@ -8,3 +8,5 @@ RUN apt-get update && apt-get install -y python3 python3-pip && \
          https://mirrors.tuna.tsinghua.edu.cn/tensorflow/linux/cpu/tensorflow-1.6.0-cp35-cp35m-linux_x86_64.whl && \
     	 rm -rf /var/lib/apt/lists/* && rm -rf ~/.pip/cache/ && \
 	 rm -rf /root/.cache && apt-get autoremove gcc python3-pip -y
+# change timezone
+COPY Shanghai /etc/localtime

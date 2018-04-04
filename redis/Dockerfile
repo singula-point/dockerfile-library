@@ -40,6 +40,8 @@ RUN wget https://github.com/libevent/libevent/releases/download/release-2.1.8-st
 #编译libevent
 RUN  make && make install;
 COPY redis.conf /data/
+# change timezone
+COPY Shanghai /etc/localtime
 #定义数据卷
 VOLUME /data
 #容器的工作目录

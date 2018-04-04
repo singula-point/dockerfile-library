@@ -15,4 +15,6 @@ RUN  adduser --system --shell /bin/bash --gecos 'Tomcat Java Servlet and JSP eng
      && chown -R tomcat:tomcat /usr/local/tomcat/* \
      && chmod +x /usr/local/tomcat/bin/*.sh 
 EXPOSE 8080
+# change timezone
+COPY Shanghai /etc/localtime
 CMD ["/usr/local/tomcat/bin/catalina.sh","run"]

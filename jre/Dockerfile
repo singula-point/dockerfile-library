@@ -18,4 +18,6 @@ RUN apt-get update \
     && rm serverjre-9.0.4_linux-x64_bin.tar.gz \ 
     && apt-get clean all \
     && rm -rf /var/lib/apt/lists/*
+# change timezone
+COPY Shanghai /etc/localtime
 CMD ["java","Server"]

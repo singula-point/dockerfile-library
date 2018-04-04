@@ -26,4 +26,6 @@ ENTRYPOINT ["/entrypoint.sh"]
 #检测mysql是否正常启动
 HEALTHCHECK CMD /healthcheck.sh
 EXPOSE 3306
+# change timezone
+COPY Shanghai /etc/localtime
 CMD ["mysqld"]
