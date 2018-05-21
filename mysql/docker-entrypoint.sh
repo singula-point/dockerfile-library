@@ -16,6 +16,7 @@
 set -e
 
 echo "[Entrypoint] MySQL Docker Image 5.7.20-1.1.2"
+/bin/mysqld_exporter
 # Fetch value from server config
 # We use mysqld --verbose --help instead of my_print_defaults because the
 # latter only show values present in config files, and not server defaults
