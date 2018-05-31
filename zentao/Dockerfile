@@ -16,5 +16,8 @@ COPY docker-entrypoint /usr/local/bin/docker-entrypoint
 RUN chmod +x           /usr/local/bin/docker-entrypoint
 
 EXPOSE 80 3306
-
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 ENTRYPOINT ["docker-entrypoint"]

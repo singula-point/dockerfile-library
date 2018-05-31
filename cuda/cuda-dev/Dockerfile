@@ -16,6 +16,10 @@ RUN echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8
     ln -s /usr/lib/x86_64-linux-gnu/libcudnn.so.6.0.21 /usr/lib/x86_64-linux-gnu/libcudnn.so.6.0 && \
     rm -rf /var/lib/dpkg/info/* /var/lib/apt/lists/* \
     /var/log/*.log /root/.cache
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 
 CMD ["bash"]
 

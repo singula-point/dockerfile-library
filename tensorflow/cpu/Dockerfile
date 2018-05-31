@@ -10,3 +10,7 @@ RUN apt-get update && apt-get install -y python3 python3-pip && \
 	 rm -rf /root/.cache && apt-get autoremove gcc python3-pip -y
 # change timezone
 COPY Shanghai /etc/localtime
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8

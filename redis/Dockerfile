@@ -46,5 +46,9 @@ COPY Shanghai /etc/localtime
 VOLUME /data
 #容器的工作目录
 WORKDIR /data
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 EXPOSE 6379
 CMD ["redis-server", "./redis.conf"]

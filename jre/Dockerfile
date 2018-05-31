@@ -20,4 +20,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 # change timezone
 COPY Shanghai /etc/localtime
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 CMD ["java","Server"]

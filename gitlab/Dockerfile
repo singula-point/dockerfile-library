@@ -36,4 +36,8 @@ COPY wrapper /usr/local/bin/
 RUN chmod 777 /usr/local/bin/wrapper
 COPY RELEASE /
 # Wrapper to handle signal, trigger runit and reconfigure GitLab 
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 CMD ["/usr/local/bin/wrapper"]

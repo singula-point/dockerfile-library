@@ -17,4 +17,8 @@ RUN  adduser --system --shell /bin/bash --gecos 'Tomcat Java Servlet and JSP eng
 EXPOSE 8080
 # change timezone
 COPY Shanghai /etc/localtime
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 CMD ["/usr/local/tomcat/bin/catalina.sh","run"]

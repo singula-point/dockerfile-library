@@ -27,4 +27,8 @@ EXPOSE 8080 50000
 #定义数据卷
 VOLUME ["/var/run/docker.sock","/var/lib/jenkins"]
 # Run the jenkins.sh
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
 CMD /jenkins.sh

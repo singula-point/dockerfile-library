@@ -26,3 +26,7 @@ ENV PATH $PATH:/usr/local/go/bin:$GOPATH/bin
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
 WORKDIR $GOPATH
+# for chinese input
+ENV LANG C.UTF-8 
+ENV LANGUAGE C.UTF-8
+ENV LC_ALL C.UTF-8
