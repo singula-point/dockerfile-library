@@ -4,8 +4,8 @@ FROM ubuntu:16.04
 #作者信息
 MAINTAINER ligp
 #设置环境变量
-ARG jre_url=download.oracle.com/otn-pub/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/serverjre-9.0.4_linux-x64_bin.tar.gz
-ENV JAVA_VERSION="9.0.4"
+ARG jre_url=download.oracle.com/otn-pub/java/jdk/10.0.1+10/fb4372174a714e6b8c52526dc134031e/serverjre-10.0.1_linux-x64_bin.tar.gz
+ENV JAVA_VERSION="10.0.1"
 ENV JAVA_HOME="/usr/local/jdk${JAVA_VERSION}" 
 ENV JRE_HOME=${JAVA_HOME} 
 ENV PATH="${PATH}:${JAVA_HOME}/bin"
@@ -13,9 +13,9 @@ ENV PATH="${PATH}:${JAVA_HOME}/bin"
 RUN apt-get update \
     && apt-get install wget -y \
     && wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $jre_url \
-    && mkdir /usr/local/jdk9.0.4 \
-    && tar xf serverjre-9.0.4_linux-x64_bin.tar.gz -C /usr/local/jdk9.0.4 --strip-components=1 \
-    && rm serverjre-9.0.4_linux-x64_bin.tar.gz \ 
+    && mkdir /usr/local/jdk10.0.1 \
+    && tar xf serverjre-10.0.1_linux-x64_bin.tar.gz -C /usr/local/jdk10.0.1 --strip-components=1 \
+    && rm serverjre-10.0.1_linux-x64_bin.tar.gz \ 
     && apt-get clean all \
     && rm -rf /var/lib/apt/lists/*
 # change timezone
