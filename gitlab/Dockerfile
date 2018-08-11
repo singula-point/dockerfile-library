@@ -11,7 +11,7 @@ RUN apt-get update -q \
 # 下载安装gitlab 
 RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu trusty main" > /etc/apt/sources.list.d/gitlab_gitlab-ce.list \
     && wget -q -O - https://packages.gitlab.com/gpg.key | apt-key add - \
-    && apt-get update || ture &&  apt-get install -y gitlab-ce=10.1.0-ce.0
+    && apt-get update || ture &&  apt-get install -y gitlab-ce=11.1.4-ce.0
 # Manage SSHD through runit 
 RUN mkdir -p /opt/gitlab/sv/sshd/supervise \
     && mkfifo /opt/gitlab/sv/sshd/supervise/ok \

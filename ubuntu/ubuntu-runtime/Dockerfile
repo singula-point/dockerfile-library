@@ -2,8 +2,11 @@ FROM ubuntu:16.04
 
 LABEL maintainer Li Jiangjin(lijj@singula-point.com)
 
-# currently, nothing to add...
-
+RUN apt-get update || true && \
+    apt-get install -y \
+    inetutils-ping && \
+    rm -rf /var/lib/dpkg/info/* /var/lib/apt/lists/* \
+    /var/log/*.log /root/.cache
 
 # change timezone
 COPY Shanghai /etc/localtime
