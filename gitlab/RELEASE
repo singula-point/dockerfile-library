@@ -1,4 +1,0 @@
-PACKAGECLOUD_REPO=gitlab-ce
-RELEASE_PACKAGE=gitlab-ce
-RELEASE_VERSION=10.1.0-ce.0
-DOWNLOAD_URL=https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/xenial/main/g/gitlab-ce/gitlab-ce_10.1.0-ce.0_amd64.deb
