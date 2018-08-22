@@ -204,5 +204,15 @@ EOF
 	chown -R mysql:mysql "$DATADIR"
 	echo "[Entrypoint] Starting MySQL 5.7.20-1.1.2"
 fi
+# auto backup
+mkdir -p /mnt/backup
+cat <<EOF > /mnt/backup/backup.sh
+#!/bin/bash
+filename=MyLiii_\`date +%Y%m%d%H%M%S\`
+mysqldump -uroot -p123456 --all-databases > /mnt/backup/\${filename}.sql
+if [ \$(ls /mnt/backup/ | grep .sql | wc -l) -gt 7 ]; then
+   rm -r \$(ls -rt /mnt/backup/*.sql | head -n1)
+fi
+EOF
 
 exec "$@"
