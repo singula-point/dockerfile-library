@@ -1,23 +1,68 @@
-# 2018-1-17 by ligp
-#基础镜像为ubuntu:16.04
-FROM ubuntu:16.04
-#作者信息
-MAINTAINER ligp
-#设置环境变量
-ARG jre_url=download.oracle.com/otn-pub/java/jdk/10.0.1+10/fb4372174a714e6b8c52526dc134031e/serverjre-10.0.1_linux-x64_bin.tar.gz
-ENV JAVA_VERSION="10.0.1"
-ENV JAVA_HOME="/usr/local/jdk${JAVA_VERSION}" 
-ENV JRE_HOME=${JAVA_HOME} 
-ENV PATH="${PATH}:${JAVA_HOME}/bin"
-#安装jre
-RUN apt-get update \
-    && apt-get install wget -y \
-    && wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $jre_url \
-    && mkdir /usr/local/jdk10.0.1 \
-    && tar xf serverjre-10.0.1_linux-x64_bin.tar.gz -C /usr/local/jdk10.0.1 --strip-components=1 \
-    && rm serverjre-10.0.1_linux-x64_bin.tar.gz \ 
-    && apt-get clean all \
-    && rm -rf /var/lib/apt/lists/*
+FROM debian:sid-slim
+
+MAINTAINER XGL
+
+COPY sources.list /etc/apt/
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		bzip2 \
+		unzip \
+		xz-utils \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Default to UTF-8 file.encoding
+ENV LANG C.UTF-8
+
+# add a simple script that can auto-detect the appropriate JAVA_HOME value
+# based on whether the JDK or only the JRE is installed
+RUN { \
+		echo '#!/bin/sh'; \
+		echo 'set -e'; \
+		echo; \
+		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
+	} > /usr/local/bin/docker-java-home \
+	&& chmod +x /usr/local/bin/docker-java-home
+
+# do some fancy footwork to create a JAVA_HOME that's cross-architecture-safe
+RUN ln -svT "/usr/lib/jvm/java-10-openjdk-$(dpkg --print-architecture)" /docker-java-home
+ENV JAVA_HOME /docker-java-home
+
+ENV JAVA_VERSION 10.0.2+13
+ENV JAVA_DEBIAN_VERSION 10.0.2+13-1
+
+RUN set -ex; \
+	\
+# deal with slim variants not having man page directories (which causes "update-alternatives" to fail)
+	if [ ! -d /usr/share/man/man1 ]; then \
+		mkdir -p /usr/share/man/man1; \
+	fi; \
+	\
+# ca-certificates-java does not support src:openjdk-10 yet:
+# /etc/ca-certificates/update.d/jks-keystore: 86: /etc/ca-certificates/update.d/jks-keystore: java: not found
+	ln -svT /docker-java-home/bin/java /usr/local/bin/java; \
+	\
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
+		openjdk-10-jre-headless="$JAVA_DEBIAN_VERSION" \
+	; \
+	rm -rf /var/lib/apt/lists/*; \
+	\
+	rm -v /usr/local/bin/java; \
+	\
+# verify that "docker-java-home" returns what we expect
+	[ "$(readlink -f "$JAVA_HOME")" = "$(docker-java-home)" ]; \
+	\
+# update-alternatives so that future installs of other OpenJDK versions don't change /usr/bin/java
+	update-alternatives --get-selections | awk -v home="$(readlink -f "$JAVA_HOME")" 'index($3, home) == 1 { $2 = "manual"; print | "update-alternatives --set-selections" }'; \
+# ... and verify that it actually worked for one of the alternatives we care about
+	update-alternatives --query java | grep -q 'Status: manual'
+
+# If you're reading this and have any feedback on how this image could be
+# improved, please open an issue or a pull request so we can discuss it!
+#
+#   https://github.com/docker-library/openjdk/issues
+
+
 # change timezone
 COPY Shanghai /etc/localtime
 # for chinese input
