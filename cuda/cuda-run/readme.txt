@@ -1,3 +1,6 @@
+This image has been deprecated!!!
+
+
 本目录下为构建cuda深度学习环境的dockerfile
 
 构建方法：docker build -t cuda:8.0 .

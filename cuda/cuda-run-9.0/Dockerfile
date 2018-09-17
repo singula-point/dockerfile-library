@@ -41,7 +41,7 @@ ENV NVIDIA_REQUIRE_CUDA "cuda>=9.0"
 #install TensorFlow-gpu
 RUN apt-get update && apt-get install -y python3  \
         python3-pip python3-dev && \
-    pip3 install --upgrade pip && \
+#    pip3 install --upgrade pip && \
     pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple tensorflow-gpu && \
     rm -rf /var/lib/apt/lists/* && rm -rf ~/.pip/cache/
 

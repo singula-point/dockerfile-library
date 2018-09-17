@@ -1,4 +1,7 @@
 
+This image has been deprecated!!!
+
+
 build tensorflow:
 bazel build -c opt --config=cuda --incompatible_load_argument_is_label=false //tensorflow/tools/pip_package:build_pip_package
 
