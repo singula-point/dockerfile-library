@@ -1,6 +1,9 @@
 FROM ubuntu:16.04
 LABEL maintainer Late Lee(li@latelee.org)
 
+COPY n163.list /tmp
+RUN cat /tmp/n163.list > /etc/apt/sources.list && rm -rf /tmp/n163.list
+
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates apt-transport-https gnupg-curl && \
     rm -rf /var/lib/apt/lists/* && \
     NVIDIA_GPGKEY_SUM=d1be581509378368edeec8c1eb2958702feedf3bc3d17011adbf24efacce4ab5 && \
